@@ -378,10 +378,10 @@ bool attach_and_link_program(const std::vector<GLuint> &shaders_id, GLuint &prog
 
 bool init_shaders() {
   GLuint vertex_shader_id, fragment_shader_id;
-  if (!load_and_compile_shader(GL_VERTEX_SHADER, "vertex.shd", vertex_shader_id)) {
+  if (!load_and_compile_shader(GL_VERTEX_SHADER, "../vertex.shd", vertex_shader_id)) {
     return false;
   }
-  if (!load_and_compile_shader(GL_FRAGMENT_SHADER, "fragment.shd", fragment_shader_id)) {
+  if (!load_and_compile_shader(GL_FRAGMENT_SHADER, "../fragment.shd", fragment_shader_id)) {
     return false;
   }
 
