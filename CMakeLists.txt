@@ -1,23 +1,15 @@
-cmake_minimum_required(VERSION 3.24)
-project(Project)
+cmake_minimum_required(VERSION 3.12)
+project(water)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find necessary libraries
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
-find_package(GLUT REQUIRED)
-find_package(Threads REQUIRED)
+set(SOURCES
+        src/main.cc
+        src/waves.cc
+        glad/src/glad.c
+        )
 
-# Add include directories
-include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
-
-# Add executable
-add_executable(Project main.cpp)
-
-# Link libraries
-target_link_libraries(Project
-        ${OPENGL_LIBRARIES}
-        ${GLEW_LIBRARIES}
-        ${GLUT_LIBRARIES}
-        ${CMAKE_THREAD_LIBS_INIT})
+add_executable(water ${SOURCES})
+target_include_directories(water PRIVATE glad/include)
+target_link_libraries(water PRIVATE glfw)
