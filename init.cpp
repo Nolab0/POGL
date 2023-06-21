@@ -91,6 +91,8 @@ void init_glew(){
         glfwTerminate();
         exit(-1);
     }
+
+    glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
     glEnable(GL_DEPTH_TEST);
 }
 
