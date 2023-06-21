@@ -95,7 +95,7 @@ void init_glew(){
 }
 
 View init_obj_and_shaders(){
-    std::vector<Vertex> vertices = loadOBJ("../test.obj");
+    std::vector<Vertex> vertices = loadOBJ("../house.obj");
 
     std::string vertexShaderSource = load("../vertex.shd");
     std::string fragmentShaderSource = load("../fragment.shd");
