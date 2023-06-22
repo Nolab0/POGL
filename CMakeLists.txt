@@ -15,7 +15,7 @@ find_package(glfw3 REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
 
 # Add executable
-add_executable(weather-visualizer main.cpp camera.cpp init.cpp)
+add_executable(weather-visualizer main.cpp camera.cpp init.cpp particles.cpp)
 
 # Link libraries
 target_link_libraries(weather-visualizer

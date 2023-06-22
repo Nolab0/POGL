@@ -14,7 +14,8 @@ void main() {
     vec3 fogColor = vec3(0.7, 0.7, 0.7);
 
     // Calculate the modified fog factor based on distance
-    float fogStartDistance = 5.0;
+    // float fogStartDistance = 5.0;
+    float fogStartDistance = 500.0;
     float fogDistance = gl_FragCoord.z / gl_FragCoord.w;  // Calculate distance from camera
     float modifiedFogFactor = clamp((fogDistance - fogStartDistance) / fogStartDistance, 0.0, 1.0);
 
