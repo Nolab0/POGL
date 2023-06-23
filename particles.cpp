@@ -35,7 +35,6 @@ void drawRain() {
         y = particles[loop].ypos;
         z = particles[loop].zpos;
 
-        glColor3f(1, 1, 1.0);
         glBegin(GL_LINES);
         glVertex3f(x, y, z);
         glVertex3f(x, y+0.5, z);

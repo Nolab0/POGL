@@ -18,7 +18,39 @@ std::string load(const std::string &filename) {
     return file_content;
 }
 
-std::vector<Vertex> loadOBJ(const std::string& filePath) {
+std::vector<Material> loadMTL(const std::string& filePath) {
+    std::vector<Material> materials;
+
+    std::ifstream file(filePath);
+    std::string line;
+    Material currentMaterial;
+
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string type;
+        iss >> type;
+
+        if (type == "newmtl") {
+            if (!currentMaterial.name.empty()) {
+                materials.push_back(currentMaterial);
+                currentMaterial = Material();
+            }
+            iss >> currentMaterial.name;
+        } else if (type == "Kd") {
+            iss >> currentMaterial.diffuse.x >> currentMaterial.diffuse.y >> currentMaterial.diffuse.z;
+        }
+        // Parse other material properties if needed
+    }
+
+    // Add the last material to the list
+    if (!currentMaterial.name.empty()) {
+        materials.push_back(currentMaterial);
+    }
+
+    return materials;
+}
+
+std::vector<Vertex> loadOBJ(const std::string& filePath, const std::vector<Material>& materials) {
     std::vector<glm::vec3> positions;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
@@ -26,6 +58,7 @@ std::vector<Vertex> loadOBJ(const std::string& filePath) {
 
     std::ifstream file(filePath);
     std::string line;
+    std::string currentMaterialName;
 
     while (std::getline(file, line)) {
         std::istringstream iss(line);
@@ -44,6 +77,8 @@ std::vector<Vertex> loadOBJ(const std::string& filePath) {
             glm::vec3 normal;
             iss >> normal.x >> normal.y >> normal.z;
             normals.push_back(normal);
+        } else if (type == "usemtl") {
+            iss >> currentMaterialName;
         } else if (type == "f") {
             std::string faceData[3];
             iss >> faceData[0] >> faceData[1] >> faceData[2];
@@ -59,6 +94,15 @@ std::vector<Vertex> loadOBJ(const std::string& filePath) {
                 vertex.position = positions[std::stoi(vertexData[0]) - 1];
                 vertex.uv = uvs[std::stoi(vertexData[1]) - 1];
                 vertex.normal = normals[std::stoi(vertexData[2]) - 1];
+
+                // Find the material by name and set the diffuse color
+                for (const auto& material : materials) {
+                    if (material.name == currentMaterialName) {
+                        vertex.color = material.diffuse;
+                        break;
+                    }
+                }
+
                 vertices.push_back(vertex);
             }
         }
@@ -97,10 +141,11 @@ void init_glew(){
 }
 
 View init_obj_and_shaders(){
-    std::vector<Vertex> vertices = loadOBJ("../house.obj");
+    std::vector<Material> materials = loadMTL("../house2.mtl");
+    std::vector<Vertex> vertices = loadOBJ("../house2.obj", materials);
 
-    std::string vertexShaderSource = load("../vertex.shd");
-    std::string fragmentShaderSource = load("../fragment.shd");
+    std::string vertexShaderSource = load("../fogShaders/vertex.shd");
+    std::string fragmentShaderSource = load("../fogShaders/fragment.shd");
 
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     const char* vertexShaderCode = vertexShaderSource.c_str();
@@ -141,6 +186,11 @@ View init_obj_and_shaders(){
     GLint normalAttrib = glGetAttribLocation(program_id, "normal");
     glEnableVertexAttribArray(normalAttrib);
     glVertexAttribPointer(normalAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, normal)));
+
+    GLint colorAttrib = glGetAttribLocation(program_id, "color");
+    glEnableVertexAttribArray(colorAttrib);
+    glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, color)));
+
 
     // Projection matrix
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);

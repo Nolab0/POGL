@@ -12,10 +12,17 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+struct Material {
+    std::string name;
+    glm::vec3 diffuse;
+    // Add other material properties as needed
+};
+
 struct Vertex {
     glm::vec3 position;
     glm::vec2 uv;
     glm::vec3 normal;
+    glm::vec3 color; // Added color attribute
 };
 
 struct View {
