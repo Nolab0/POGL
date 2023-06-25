@@ -39,6 +39,10 @@ std::vector<Material> loadMTL(const std::string& filePath) {
             iss >> currentMaterial.name;
         } else if (type == "Kd") {
             iss >> currentMaterial.diffuse.x >> currentMaterial.diffuse.y >> currentMaterial.diffuse.z;
+        } else if (type == "Ka") {
+            iss >> currentMaterial.ambient.x >> currentMaterial.ambient.y >> currentMaterial.ambient.z;
+        } else if (type == "Ks") {
+            iss >> currentMaterial.specular.x >> currentMaterial.specular.y >> currentMaterial.specular.z;
         }
         // Parse other material properties if needed
     }
@@ -50,6 +54,7 @@ std::vector<Material> loadMTL(const std::string& filePath) {
 
     return materials;
 }
+
 
 std::vector<Vertex> loadOBJ(const std::string& filePath, const std::vector<Material>& materials) {
     std::vector<glm::vec3> positions;
@@ -96,10 +101,27 @@ std::vector<Vertex> loadOBJ(const std::string& filePath, const std::vector<Mater
                 vertex.uv = uvs[std::stoi(vertexData[1]) - 1];
                 vertex.normal = normals[std::stoi(vertexData[2]) - 1];
 
-                // Find the material by name and set the diffuse color
                 for (const auto& material : materials) {
                     if (material.name == currentMaterialName) {
-                        vertex.color = material.diffuse;
+                        glm::vec3 ambientColor = material.ambient;
+                        glm::vec3 diffuseColor = material.diffuse;
+                        glm::vec3 specularColor = material.specular;
+
+                        glm::vec3 lightPosition = glm::vec3(0.0f, 15.0f, 0.0f);
+                        glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+                        glm::vec3 normal = glm::normalize(vertex.normal);
+                        glm::vec3 lightDirection = glm::normalize(lightPosition - vertex.position);
+
+                        float ambientIntensity = 0.1f;
+                        float diffuseIntensity = glm::max(glm::dot(normal, lightDirection), 0.0f);
+                        float specularIntensity = 0.5f;
+
+                        glm::vec3 ambientComponent = ambientIntensity * ambientColor;
+                        glm::vec3 diffuseComponent = diffuseIntensity * diffuseColor * lightColor;
+                        glm::vec3 specularComponent = specularIntensity * specularColor * lightColor;
+
+                        vertex.color = ambientComponent + diffuseComponent + specularComponent;
                         break;
                     }
                 }
@@ -111,6 +133,7 @@ std::vector<Vertex> loadOBJ(const std::string& filePath, const std::vector<Mater
 
     return vertices;
 }
+
 
 GLFWwindow* init_glfw(){
     if (!glfwInit()) {

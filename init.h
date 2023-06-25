@@ -9,14 +9,17 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <GL/freeglut.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 struct Material {
     std::string name;
     glm::vec3 diffuse;
-    // Add other material properties as needed
+    glm::vec3 ambient;
+    glm::vec3 specular;
 };
+
 
 struct Vertex {
     glm::vec3 position;

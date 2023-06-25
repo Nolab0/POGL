@@ -16,7 +16,7 @@ void init_particle(int i, unsigned long waterDropSize, unsigned long offset, std
     particles[i].life = 1.0;
 
     moveObjectToPosition(vertices.begin() + offset + i * waterDropSize, vertices.begin() + offset + (i+1) * waterDropSize, glm::vec3((float) (rand() % 21) - 10 + (float)(rand() % 100) / 100.0, 10.0 + (float)(rand() % 10), (float) (rand() % 21) - 10  + (float)(rand() % 100) / 100.0));
-    particles[i].vel = 0;
+    particles[i].vel = -50;
     particles[i].gravity = -0.8;
 }
 
