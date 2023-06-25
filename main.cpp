@@ -1,3 +1,4 @@
+#include <random>
 #include "camera.h"
 #include "init.h"
 #include "particles.h"
@@ -12,16 +13,19 @@ int main() {
     glfwSetMouseButtonCallback(window, mouseButtonCallback);
     glfwSetCursorPosCallback(window, mouseCallback);
 
-    View v = init_obj_and_shaders();
-
-    init_particles();
+    std::vector<Vertex> vertices;
+    GLuint vertexBuffer;
+    View v = init_obj_and_shaders(vertices, vertexBuffer);
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         v.view = look_at(v.viewUniform);
 
-        drawRain();
+        updateRain(vertices, v.waterDropSize, v.houseSize);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
         glDrawArrays(GL_TRIANGLES, 0, v.size);
 

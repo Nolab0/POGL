@@ -1,4 +1,5 @@
 #include "init.h"
+#include "particles.h"
 
 GLuint program_id;
 
@@ -140,9 +141,15 @@ void init_glew(){
     glEnable(GL_DEPTH_TEST);
 }
 
-View init_obj_and_shaders(){
+View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     std::vector<Material> materials = loadMTL("../house2.mtl");
-    std::vector<Vertex> vertices = loadOBJ("../house2.obj", materials);
+    vertices = loadOBJ("../house2.obj", materials);
+
+    std::vector<Material> mat = loadMTL("../drop.mtl");
+    std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
+
+    unsigned long houseSize = vertices.size();
+    init_particles(waterDrop, vertices.size(), vertices);
 
     std::string vertexShaderSource = load("../fogShaders/vertex.shd");
     std::string fragmentShaderSource = load("../fogShaders/fragment.shd");
@@ -169,7 +176,7 @@ View init_obj_and_shaders(){
     glBindVertexArray(vertexArrayID);
 
     // Create vertex buffer object (VBO)
-    GLuint vertexBuffer;
+
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
@@ -206,6 +213,6 @@ View init_obj_and_shaders(){
     glUniformMatrix4fv(viewUniform, 1, GL_FALSE, glm::value_ptr(view));
 
     return {
-        view, viewUniform, static_cast<int>(vertices.size())
+        view, viewUniform, vertices.size(), waterDrop.size(), houseSize
     };
 }

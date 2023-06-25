@@ -28,14 +28,15 @@ struct Vertex {
 struct View {
     glm::mat4 view;
     GLint viewUniform;
-    int size;
+    unsigned long size;
+    unsigned long waterDropSize;
+    unsigned long houseSize;
 };
 
 std::string load(const std::string &filename);
-std::vector<Vertex> loadOBJ(const std::string& filePath);
 GLFWwindow* init_glfw();
 void init_glew();
-View init_obj_and_shaders();
+View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer);
 
 
 #endif //WEATHER_VISUALIZER_INIT_H
