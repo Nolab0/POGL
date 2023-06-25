@@ -4,15 +4,13 @@
 
 #include "init.h"
 
-#define MAX_PARTICLES 1000
+#define MAX_PARTICLES 10000
 
 class particle {
 public:
     float life;
-    float fade;
     float vel;
     float gravity;
-    unsigned long index;
 };
 
 void init_particles(const std::vector<Vertex>& waterDrop, unsigned long offset, std::vector<Vertex> &vertices);

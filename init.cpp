@@ -142,8 +142,8 @@ void init_glew(){
 }
 
 View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
-    std::vector<Material> materials = loadMTL("../house2.mtl");
-    vertices = loadOBJ("../house2.obj", materials);
+    std::vector<Material> materials = loadMTL("../city.mtl");
+    vertices = loadOBJ("../city.obj", materials);
 
     std::vector<Material> mat = loadMTL("../drop.mtl");
     std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
@@ -151,8 +151,8 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     unsigned long houseSize = vertices.size();
     init_particles(waterDrop, vertices.size(), vertices);
 
-    std::string vertexShaderSource = load("../fogShaders/vertex.shd");
-    std::string fragmentShaderSource = load("../fogShaders/fragment.shd");
+    std::string vertexShaderSource = load("../fogShaders/vertex.glsl");
+    std::string fragmentShaderSource = load("../fogShaders/fragment.glsl");
 
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     const char* vertexShaderCode = vertexShaderSource.c_str();

@@ -14,11 +14,8 @@ void moveObjectToPosition(std::vector<Vertex>::iterator begin, std::vector<Verte
 
 void init_particle(int i, unsigned long waterDropSize, unsigned long offset, std::vector<Vertex> &vertices) {
     particles[i].life = 1.0;
-    particles[i].fade = float(rand()%100)/1000.0f+0.003f;
 
-    particles[i].index = offset + i * waterDropSize;
-
-    moveObjectToPosition(vertices.begin() + offset + i * waterDropSize, vertices.begin() + offset + (i+1) * waterDropSize, glm::vec3((float) (rand() % 21) - 10, 15.0, (float) (rand() % 21) - 10));
+    moveObjectToPosition(vertices.begin() + offset + i * waterDropSize, vertices.begin() + offset + (i+1) * waterDropSize, glm::vec3((float) (rand() % 21) - 10 + (float)(rand() % 100) / 100.0, 10.0 + (float)(rand() % 10), (float) (rand() % 21) - 10  + (float)(rand() % 100) / 100.0));
     particles[i].vel = 0;
     particles[i].gravity = -0.8;
 }
@@ -37,7 +34,7 @@ void updateRain(std::vector<Vertex> &vertices, int waterDropSize, int offset) {
         }
         particles[loop].vel += particles[loop].gravity;
 
-        if (vertices[(offset + loop * waterDropSize)].position.y <= -10) {
+        if (vertices[(offset + loop * waterDropSize)].position.y <= -5) {
             particles[loop].life = -1.0;
         }
         if (particles[loop].life < 0.0) {
