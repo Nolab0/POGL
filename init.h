@@ -12,7 +12,6 @@
 #include <GL/freeglut.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "particles.h"
 
 struct Material {
     std::string name;
@@ -21,20 +20,24 @@ struct Material {
     glm::vec3 specular;
 };
 
-
-struct Vertex {
-    glm::vec3 position;
-    glm::vec2 uv;
-    glm::vec3 normal;
-    glm::vec3 color; // Added color attribute
-};
-
 struct View {
     glm::mat4 view;
     GLint viewUniform;
     unsigned long size;
     unsigned long waterDropSize;
     unsigned long houseSize;
+};
+
+struct Vertex {
+    glm::vec3 position;
+    glm::vec2 uv;
+    glm::vec3 normal;
+    glm::vec3 color;
+};
+
+enum ParticleType {
+    RAIN,
+    SNOW
 };
 
 

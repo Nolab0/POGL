@@ -31,7 +31,7 @@ void init_particle(int i, unsigned long waterDropSize, unsigned long offset, std
 void init_particles(const std::vector<Vertex>& waterDrop, unsigned long offset, std::vector<Vertex> &vertices) {
     for (loop = 0; loop < MAX_PARTICLES; loop++) {
         vertices.insert(vertices.end(), waterDrop.begin(), waterDrop.end());
-        init_particle(loop, waterDrop.size(), offset, vertices, particleType);
+        init_particle(loop, waterDrop.size(), offset, vertices);
     }
 }
 
@@ -39,6 +39,11 @@ void updateParticles(std::vector<Vertex> &vertices, int waterDropSize, int offse
     for (loop = 0; loop < MAX_PARTICLES; loop++) {
         for (int i = 0; i < waterDropSize; i++) {
             vertices[(offset + loop * waterDropSize) + i].position.y += particles[loop].vel / (2 * 1000);
+            if (particleType == SNOW){
+                vertices[(offset + loop * waterDropSize) + i].position.x += sin(vertices[(offset + loop * waterDropSize) + i].position.y);
+                vertices[(offset + loop * waterDropSize) + i].position.z += sin(vertices[(offset + loop * waterDropSize) + i].position.y);
+                //std::cout << vertices[(offset + loop * waterDropSize) + i].position.x << " " << vertices[(offset + loop * waterDropSize) + i].position.y << " " << vertices[(offset + loop * waterDropSize) + i].position.z << std::endl;
+            }
         }
         particles[loop].vel += particles[loop].gravity;
 

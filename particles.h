@@ -6,11 +6,6 @@
 
 #define MAX_PARTICLES 10000
 
-enum ParticleType {
-    RAIN,
-    SNOW
-};
-
 class particle {
 public:
     float life;
