@@ -12,6 +12,7 @@
 #include <GL/freeglut.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "particles.h"
 
 struct Material {
     std::string name;
@@ -40,6 +41,7 @@ struct View {
 extern std::vector<Vertex> vertices;
 extern float fogStartDistance;
 extern GLuint program_id;
+extern ParticleType particleType;
 
 std::string load(const std::string &filename);
 GLFWwindow* init_glfw();

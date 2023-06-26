@@ -5,6 +5,7 @@ GLuint program_id;
 std::vector<Vertex> vertices;
 unsigned long sceneSize;
 float fogStartDistance = 5;
+ParticleType particleType = RAIN;
 
 std::string load(const std::string &filename) {
     std::ifstream input_src_file(filename, std::ios::in);
@@ -173,7 +174,10 @@ void set_snow(){
 
     vertices.erase(vertices.begin() + sceneSize, vertices.end());
 
+    particleType = SNOW;
+
     init_particles(snowflake, sceneSize, vertices);
+
 }
 
 void set_rain(){
@@ -181,6 +185,8 @@ void set_rain(){
     std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
 
     vertices.erase(vertices.begin() + sceneSize, vertices.end());
+
+    particleType = RAIN;
 
     init_particles(waterDrop, sceneSize, vertices);
 }
@@ -195,6 +201,7 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
 
     unsigned long houseSize = vertices.size();
+    particleType = RAIN;
     init_particles(waterDrop, vertices.size(), vertices);
 
     std::string vertexShaderSource = load("../fogShaders/vertex.glsl");
