@@ -4,7 +4,7 @@
 GLuint program_id;
 std::vector<Vertex> vertices;
 unsigned long sceneSize;
-float fogStartDistance = 500;
+float fogStartDistance = 5;
 
 std::string load(const std::string &filename) {
     std::ifstream input_src_file(filename, std::ios::in);
@@ -244,7 +244,7 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     glEnableVertexAttribArray(colorAttrib);
     glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, color)));
 
-    GLint fogStartDistanceUniform = glGetUniformLocation(program_id, "fogStartDistance");
+    GLint fogStartDistanceUniform = glGetUniformLocation(program_id, "fogStart");
     glUniform1f(fogStartDistanceUniform, fogStartDistance);
 
     // Projection matrix

@@ -1,4 +1,3 @@
-#include <random>
 #include "camera.h"
 #include "init.h"
 #include "particles.h"

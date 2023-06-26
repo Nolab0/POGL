@@ -38,6 +38,8 @@ struct View {
 
 
 extern std::vector<Vertex> vertices;
+extern float fogStartDistance;
+extern GLuint program_id;
 
 std::string load(const std::string &filename);
 GLFWwindow* init_glfw();

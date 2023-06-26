@@ -59,6 +59,11 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
     }
 }
 
+void updateFog(){
+    GLint fogStartDistanceUniform = glGetUniformLocation(program_id, "fogStart");
+    glUniform1f(fogStartDistanceUniform, fogStartDistance);
+}
+
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -78,11 +83,31 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
     if (key == GLFW_KEY_RIGHT) {
         cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * cameraSpeedMultiplier;
     }
-    if (key == GLFW_KEY_N) {
+    if (key == GLFW_KEY_N && action == GLFW_PRESS) {
         set_snow();
     }
-    if (key == GLFW_KEY_R) {
+    if (key == GLFW_KEY_R && action == GLFW_PRESS) {
         set_rain();
+    }
+    if (key == GLFW_KEY_F && action == GLFW_PRESS) {
+        if (fogStartDistance < 500){
+            fogStartDistance = 500;
+        }
+        else
+        {
+            fogStartDistance = 15;
+        }
+        updateFog();
+    }
+
+    if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS) {
+        fogStartDistance += 5;
+        updateFog();
+    }
+    if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_PRESS) {
+        if (fogStartDistance > 5)
+            fogStartDistance -= 5;
+        updateFog();
     }
 }
 
