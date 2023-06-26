@@ -2,6 +2,9 @@
 #include "particles.h"
 
 GLuint program_id;
+std::vector<Vertex> vertices;
+unsigned long sceneSize;
+float fogStartDistance = 500;
 
 std::string load(const std::string &filename) {
     std::ifstream input_src_file(filename, std::ios::in);
@@ -164,9 +167,29 @@ void init_glew(){
     glEnable(GL_DEPTH_TEST);
 }
 
+void set_snow(){
+    std::vector<Material> mat = loadMTL("../snowflake.mtl");
+    std::vector<Vertex> snowflake = loadOBJ("../snowflake.obj", mat);
+
+    vertices.erase(vertices.begin() + sceneSize, vertices.end());
+
+    init_particles(snowflake, sceneSize, vertices);
+}
+
+void set_rain(){
+    std::vector<Material> mat = loadMTL("../drop.mtl");
+    std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
+
+    vertices.erase(vertices.begin() + sceneSize, vertices.end());
+
+    init_particles(waterDrop, sceneSize, vertices);
+}
+
 View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     std::vector<Material> materials = loadMTL("../city.mtl");
     vertices = loadOBJ("../city.obj", materials);
+
+    sceneSize = vertices.size();
 
     std::vector<Material> mat = loadMTL("../drop.mtl");
     std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
@@ -221,6 +244,8 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     glEnableVertexAttribArray(colorAttrib);
     glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, color)));
 
+    GLint fogStartDistanceUniform = glGetUniformLocation(program_id, "fogStartDistance");
+    glUniform1f(fogStartDistanceUniform, fogStartDistance);
 
     // Projection matrix
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);

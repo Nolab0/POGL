@@ -13,7 +13,6 @@ int main() {
     glfwSetMouseButtonCallback(window, mouseButtonCallback);
     glfwSetCursorPosCallback(window, mouseCallback);
 
-    std::vector<Vertex> vertices;
     GLuint vertexBuffer;
     View v = init_obj_and_shaders(vertices, vertexBuffer);
 

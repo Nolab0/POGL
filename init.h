@@ -36,10 +36,15 @@ struct View {
     unsigned long houseSize;
 };
 
+
+extern std::vector<Vertex> vertices;
+
 std::string load(const std::string &filename);
 GLFWwindow* init_glfw();
 void init_glew();
 View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer);
+void set_snow();
+void set_rain();
 
 
 #endif //WEATHER_VISUALIZER_INIT_H

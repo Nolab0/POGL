@@ -1,4 +1,6 @@
+#include <iostream>
 #include "camera.h"
+#include "init.h"
 
 float cameraSpeed = 0.05f;
 glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -75,6 +77,12 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
     }
     if (key == GLFW_KEY_RIGHT) {
         cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * cameraSpeedMultiplier;
+    }
+    if (key == GLFW_KEY_N) {
+        set_snow();
+    }
+    if (key == GLFW_KEY_R) {
+        set_rain();
     }
 }
 
