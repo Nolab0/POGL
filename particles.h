@@ -8,7 +8,6 @@
 
 class particle {
 public:
-    float life;
     float vel;
     float gravity;
 };

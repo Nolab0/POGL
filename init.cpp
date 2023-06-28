@@ -170,6 +170,25 @@ void init_glew(){
     glEnable(GL_DEPTH_TEST);
 }
 
+std::vector<Material> cubeMat = loadMTL("../objects/snow.mtl");
+std::vector<Vertex> cube = loadOBJ("../objects/snow.obj", cubeMat);
+
+void deep_copy(std::vector<Vertex> &dest, std::vector<Vertex> &src){
+    dest.clear();
+    dest.insert(dest.end(), src.begin(), src.end());
+}
+
+void impact(float x, float z){
+    std::vector<Vertex> cubeCpy;
+    deep_copy(cubeCpy, cube);
+    for(int i = 0; i < cubeCpy.size(); i++){
+        cubeCpy[i].position.x += x;
+        cubeCpy[i].position.z += z;
+        cubeCpy[i].position.y += 0.2;
+    }
+    vertices.insert(vertices.end(), cubeCpy.begin(), cubeCpy.end());
+}
+
 void set_snow(){
     std::vector<Material> mat = loadMTL("../objects/snowflake.mtl");
     std::vector<Vertex> snowflake = loadOBJ("../objects/snowflake.obj", mat);
