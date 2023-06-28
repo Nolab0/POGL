@@ -34,6 +34,7 @@ struct Vertex {
 };
 
 enum ParticleType {
+    NONE,
     RAIN,
     SNOW
 };
@@ -43,7 +44,7 @@ extern std::vector<Vertex> vertices;
 extern float fogStartDistance;
 extern GLuint program_id;
 extern ParticleType particleType;
-extern unsigned long houseSize;
+extern unsigned long sceneSize;
 extern unsigned long particleSize;
 extern float temperature;
 
@@ -53,6 +54,7 @@ void init_glew();
 View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer);
 void set_snow();
 void set_rain();
+void set_sun();
 
 
 #endif //WEATHER_VISUALIZER_INIT_H

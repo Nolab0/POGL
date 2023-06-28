@@ -6,7 +6,6 @@ std::vector<Vertex> vertices;
 unsigned long sceneSize;
 float fogStartDistance = 15;
 ParticleType particleType = RAIN;
-unsigned long houseSize;
 unsigned long particleSize;
 float temperature = 0.0f;
 
@@ -196,6 +195,11 @@ void set_rain(){
     init_particles(waterDrop, sceneSize);
 }
 
+void set_sun(){
+    vertices.erase(vertices.begin() + sceneSize, vertices.end());
+    particleType = NONE;
+}
+
 View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     std::vector<Material> materials = loadMTL("../city.mtl");
     vertices = loadOBJ("../city.obj", materials);
@@ -205,10 +209,10 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     std::vector<Material> mat = loadMTL("../drop.mtl");
     std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
 
-    houseSize = vertices.size();
     particleSize = waterDrop.size();
     particleType = RAIN;
     init_particles(waterDrop, vertices.size());
+
 
     std::string vertexShaderSource = load("../fogShaders/vertex.glsl");
     std::string fragmentShaderSource = load("../fogShaders/fragment.glsl");

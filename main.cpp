@@ -20,7 +20,9 @@ int main() {
 
         v.view = look_at(v.viewUniform);
 
-        updateParticles();
+        if (particleType != NONE){
+            updateParticles();
+        }
 
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
         glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);

@@ -38,15 +38,15 @@ void init_particles(const std::vector<Vertex>& particle, unsigned long offset) {
 void updateParticles() {
     for (loop = 0; loop < MAX_PARTICLES; loop++) {
         for (int i = 0; i < particleSize; i++) {
-            vertices[(houseSize + loop * particleSize) + i].position.y += particles[loop].vel / (2 * 1000);
+            vertices[(sceneSize + loop * particleSize) + i].position.y += particles[loop].vel / (2 * 1000);
         }
         particles[loop].vel += particles[loop].gravity;
 
-        if (vertices[(houseSize + loop * particleSize)].position.y <= 0) {
+        if (vertices[(sceneSize + loop * particleSize)].position.y <= 0) {
             particles[loop].life = -1.0;
         }
         if (particles[loop].life < 0.0) {
-            init_particle(loop, particleSize, houseSize);
+            init_particle(loop, particleSize, sceneSize);
         }
     }
 }

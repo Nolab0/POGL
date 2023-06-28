@@ -121,6 +121,9 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
         temperature -= 5;
         updateTemp();
     }
+    if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+        set_sun();
+    }
 }
 
 glm::mat4 look_at(GLint viewUniform){
