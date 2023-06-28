@@ -176,7 +176,7 @@ void set_snow(){
 
     particleType = SNOW;
 
-    init_particles(snowflake, sceneSize, vertices);
+    init_particles(snowflake, sceneSize);
 
 }
 
@@ -188,7 +188,7 @@ void set_rain(){
 
     particleType = RAIN;
 
-    init_particles(waterDrop, sceneSize, vertices);
+    init_particles(waterDrop, sceneSize);
 }
 
 View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
@@ -202,7 +202,7 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
 
     unsigned long houseSize = vertices.size();
     particleType = RAIN;
-    init_particles(waterDrop, vertices.size(), vertices);
+    init_particles(waterDrop, vertices.size());
 
     std::string vertexShaderSource = load("../fogShaders/vertex.glsl");
     std::string fragmentShaderSource = load("../fogShaders/fragment.glsl");
