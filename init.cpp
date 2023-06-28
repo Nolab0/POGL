@@ -171,8 +171,8 @@ void init_glew(){
 }
 
 void set_snow(){
-    std::vector<Material> mat = loadMTL("../snowflake.mtl");
-    std::vector<Vertex> snowflake = loadOBJ("../snowflake.obj", mat);
+    std::vector<Material> mat = loadMTL("../objects/snowflake.mtl");
+    std::vector<Vertex> snowflake = loadOBJ("../objects/snowflake.obj", mat);
 
     vertices.erase(vertices.begin() + sceneSize, vertices.end());
 
@@ -184,8 +184,8 @@ void set_snow(){
 }
 
 void set_rain(){
-    std::vector<Material> mat = loadMTL("../drop.mtl");
-    std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
+    std::vector<Material> mat = loadMTL("../objects/drop.mtl");
+    std::vector<Vertex> waterDrop = loadOBJ("../objects/drop.obj", mat);
 
     vertices.erase(vertices.begin() + sceneSize, vertices.end());
 
@@ -201,8 +201,8 @@ void set_sun(){
 }
 
 View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
-    std::vector<Material> materials = loadMTL("../city.mtl");
-    vertices = loadOBJ("../city.obj", materials);
+    std::vector<Material> materials = loadMTL("../objects/city.mtl");
+    vertices = loadOBJ("../objects/city.obj", materials);
 
     sceneSize = vertices.size();
 
