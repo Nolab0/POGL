@@ -1,10 +1,9 @@
-#include <iostream>
 #include "camera.h"
 #include "init.h"
 
 float cameraSpeed = 0.05f;
-glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraPosition = glm::vec3(0.0f, 5.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(1.0f, -0.6f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 bool firstMouse = true;
@@ -64,6 +63,11 @@ void updateFog(){
     glUniform1f(fogStartDistanceUniform, fogStartDistance);
 }
 
+void updateTemp(){
+    GLint temperatureUniform = glGetUniformLocation(program_id, "temperature");
+    glUniform1f(temperatureUniform, temperature);
+}
+
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -108,6 +112,14 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
         if (fogStartDistance > 5)
             fogStartDistance -= 5;
         updateFog();
+    }
+    if (key == GLFW_KEY_H && action == GLFW_PRESS) {
+        temperature += 5;
+        updateTemp();
+    }
+    if (key == GLFW_KEY_C && action == GLFW_PRESS) {
+        temperature -= 5;
+        updateTemp();
     }
 }
 

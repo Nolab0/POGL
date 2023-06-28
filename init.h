@@ -24,8 +24,6 @@ struct View {
     glm::mat4 view;
     GLint viewUniform;
     unsigned long size;
-    unsigned long waterDropSize;
-    unsigned long houseSize;
 };
 
 struct Vertex {
@@ -45,6 +43,9 @@ extern std::vector<Vertex> vertices;
 extern float fogStartDistance;
 extern GLuint program_id;
 extern ParticleType particleType;
+extern unsigned long houseSize;
+extern unsigned long particleSize;
+extern float temperature;
 
 std::string load(const std::string &filename);
 GLFWwindow* init_glfw();

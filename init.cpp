@@ -4,8 +4,11 @@
 GLuint program_id;
 std::vector<Vertex> vertices;
 unsigned long sceneSize;
-float fogStartDistance = 5;
+float fogStartDistance = 15;
 ParticleType particleType = RAIN;
+unsigned long houseSize;
+unsigned long particleSize;
+float temperature = 0.0f;
 
 std::string load(const std::string &filename) {
     std::ifstream input_src_file(filename, std::ios::in);
@@ -175,6 +178,7 @@ void set_snow(){
     vertices.erase(vertices.begin() + sceneSize, vertices.end());
 
     particleType = SNOW;
+    particleSize = snowflake.size();
 
     init_particles(snowflake, sceneSize);
 
@@ -187,6 +191,7 @@ void set_rain(){
     vertices.erase(vertices.begin() + sceneSize, vertices.end());
 
     particleType = RAIN;
+    particleSize = waterDrop.size();
 
     init_particles(waterDrop, sceneSize);
 }
@@ -200,7 +205,8 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     std::vector<Material> mat = loadMTL("../drop.mtl");
     std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
 
-    unsigned long houseSize = vertices.size();
+    houseSize = vertices.size();
+    particleSize = waterDrop.size();
     particleType = RAIN;
     init_particles(waterDrop, vertices.size());
 
@@ -254,6 +260,9 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     GLint fogStartDistanceUniform = glGetUniformLocation(program_id, "fogStart");
     glUniform1f(fogStartDistanceUniform, fogStartDistance);
 
+    GLint temperatureUniform = glGetUniformLocation(program_id, "temperature");
+    glUniform1f(temperatureUniform, temperature);
+
     // Projection matrix
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
     GLint projectionUniform = glGetUniformLocation(program_id, "projection");
@@ -268,6 +277,6 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     glUniformMatrix4fv(viewUniform, 1, GL_FALSE, glm::value_ptr(view));
 
     return {
-        view, viewUniform, vertices.size(), waterDrop.size(), houseSize
+        view, viewUniform, vertices.size()
     };
 }

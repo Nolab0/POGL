@@ -13,7 +13,7 @@ public:
     float gravity;
 };
 
-void init_particles(const std::vector<Vertex>& waterDrop, unsigned long offset);
-void updateParticles(int waterDropSize, int offset);
+void init_particles(const std::vector<Vertex>& particle, unsigned long offset);
+void updateParticles();
 
 #endif //WEATHER_VISUALIZER_PARTICLES_H
