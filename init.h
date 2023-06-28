@@ -23,7 +23,6 @@ struct Material {
 struct View {
     glm::mat4 view;
     GLint viewUniform;
-    unsigned long size;
 };
 
 struct Vertex {

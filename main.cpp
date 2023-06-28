@@ -27,7 +27,7 @@ int main() {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
         glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
-        glDrawArrays(GL_TRIANGLES, 0, v.size);
+        glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
         glfwSwapBuffers(window);
         glfwPollEvents();

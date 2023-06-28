@@ -206,13 +206,7 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
 
     sceneSize = vertices.size();
 
-    std::vector<Material> mat = loadMTL("../drop.mtl");
-    std::vector<Vertex> waterDrop = loadOBJ("../drop2.obj", mat);
-
-    particleSize = waterDrop.size();
-    particleType = RAIN;
-    init_particles(waterDrop, vertices.size());
-
+    particleType = NONE;
 
     std::string vertexShaderSource = load("../fogShaders/vertex.glsl");
     std::string fragmentShaderSource = load("../fogShaders/fragment.glsl");
@@ -281,6 +275,6 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     glUniformMatrix4fv(viewUniform, 1, GL_FALSE, glm::value_ptr(view));
 
     return {
-        view, viewUniform, vertices.size()
+        view, viewUniform
     };
 }
