@@ -3,25 +3,23 @@ project(weather-visualizer)
 
 set(CMAKE_CXX_STANDARD 14)
 
-# Find necessary libraries
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(Threads REQUIRED)
 find_package(assimp REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(CURL REQUIRED)
 
-# Add include directories
-include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
+include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${CURL_INCLUDE_DIRS})  # Added CURL include directory
 
-# Add executable
-add_executable(weather-visualizer main.cpp camera.cpp init.cpp particles.cpp)
+add_executable(weather-visualizer main.cpp camera.cpp init.cpp particles.cpp json.hpp)
 
-# Link libraries
 target_link_libraries(weather-visualizer
         ${OPENGL_LIBRARIES}
         ${GLEW_LIBRARIES}
         ${GLUT_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
         assimp
-        glfw)
+        glfw
+        ${CURL_LIBRARIES})
