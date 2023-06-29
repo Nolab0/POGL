@@ -1,3 +1,6 @@
+#include <ctime>
+
+#include "init.h"
 #include "weather.h"
 
 using json = nlohmann::json;
@@ -42,6 +45,10 @@ WeatherInfo getWeatherData(std::string latitude, std::string longitude) {
             json snow = hourly["snowfall"];
             json visibility = hourly["visibility"];
 
+            std::time_t currentTime = std::time(nullptr);
+            std::tm* localTime = std::localtime(&currentTime);
+            int currentHour = localTime->tm_hour;
+            weatherInfo.temperature = hourly["temperature_2m"][currentHour];
 
             for (int i = 0; i < rain.size(); i++) {
                 if (rain[i] > 0) {
@@ -66,3 +73,17 @@ WeatherInfo getWeatherData(std::string latitude, std::string longitude) {
     return weatherInfo;
 }
 
+void setWeatherDisplay(WeatherInfo weatherInfo) {
+    temperature = weatherInfo.temperature;
+    if (weatherInfo.snow) {
+        set_snow();
+    }
+    else if (weatherInfo.rain) {
+        set_rain();
+    }
+    else {
+        set_sun();
+    }
+
+    fogStartDistance = ((float)weatherInfo.visibility / 24000.0f) * 25;
+}

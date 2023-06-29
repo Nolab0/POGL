@@ -13,7 +13,7 @@ int main() {
                                         {"46.19", "6.77"}, // Avoriaz
                                         {"74.03", "111.53"}}; // Nordvik
 
-    WeatherInfo apiResponse = getWeatherData(cityPositions[7][0], cityPositions[7][1]);
+    WeatherInfo apiResponse = getWeatherData(cityPositions[1][0], cityPositions[1][1]);
 
     GLFWwindow* window = init_glfw();
 
@@ -25,6 +25,7 @@ int main() {
 
     GLuint vertexBuffer;
     View v = init_obj_and_shaders(vertices, vertexBuffer);
+    setWeatherDisplay(apiResponse);
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

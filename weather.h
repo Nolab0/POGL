@@ -22,5 +22,6 @@ public:
 };
 
 WeatherInfo getWeatherData(std::string latitude, std::string longitude);
+void setWeatherDisplay(WeatherInfo weatherInfo);
 
 #endif //WEATHER_VISUALIZER_WEATHER_H
