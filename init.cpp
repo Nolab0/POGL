@@ -303,6 +303,7 @@ void set_rain(){
 
     for (int i = 0; i < MAX_SPLASH; i++) {
         vertices.insert(vertices.end(), animation.begin(), animation.end());
+        anim[i] = false;
     }
 }
 

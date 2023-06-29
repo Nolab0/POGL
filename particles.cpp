@@ -64,6 +64,9 @@ void updateParticles() {
                 particles[loop].gravity = -2;
                 particles[loop].bounce = false;
             } else {
+                if (particleType == HAIL && !particles[loop].bounce){
+                    init_particle(loop, particleSize, sceneSize);
+                }
                 if (particleType == SNOW){
                     impactSnow(vertices[(sceneSize + loop * particleSize)].position.x, vertices[(sceneSize + loop * particleSize)].position.z);
                     init_particle(loop, particleSize, sceneSize);
