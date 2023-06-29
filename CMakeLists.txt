@@ -13,7 +13,7 @@ find_package(CURL REQUIRED)
 
 include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${CURL_INCLUDE_DIRS})  # Added CURL include directory
 
-add_executable(weather-visualizer main.cpp camera.cpp init.cpp particles.cpp json.hpp)
+add_executable(weather-visualizer main.cpp camera.cpp init.cpp particles.cpp json.hpp weather.cpp weather.h)
 
 target_link_libraries(weather-visualizer
         ${OPENGL_LIBRARIES}
