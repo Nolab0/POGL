@@ -212,6 +212,18 @@ void set_snow(){
 
 }
 
+void set_hail(){
+    std::vector<Material> mat = loadMTL("../objects/hail.mtl");
+    std::vector<Vertex> hail = loadOBJ("../objects/hail.obj", mat);
+
+    vertices.erase(vertices.begin() + sceneSize, vertices.end());
+
+    particleType = HAIL;
+    particleSize = hail.size();
+
+    init_particles(hail, sceneSize);
+}
+
 void set_rain(){
     std::vector<Material> mat = loadMTL("../objects/drop.mtl");
     std::vector<Vertex> waterDrop = loadOBJ("../objects/drop.obj", mat);

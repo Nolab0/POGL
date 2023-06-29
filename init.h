@@ -35,7 +35,8 @@ struct Vertex {
 enum ParticleType {
     NONE,
     RAIN,
-    SNOW
+    SNOW,
+    HAIL
 };
 
 
@@ -56,6 +57,7 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer);
 void set_snow();
 void set_rain();
 void set_sun();
+void set_hail();
 void impact(float x, float z);
 
 #endif //WEATHER_VISUALIZER_INIT_H

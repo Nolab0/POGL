@@ -23,6 +23,11 @@ void init_particle(int i, unsigned long particleSize, unsigned long offset) {
             particles[i].vel = -10;
             particles[i].gravity = 0;
             break;
+        case HAIL:
+            particles[i].vel = -50;
+            particles[i].gravity = -0.4;
+            particles[i].bounce = true;
+            break;
     }
 }
 
@@ -39,11 +44,23 @@ void updateParticles() {
             vertices[(sceneSize + loop * particleSize) + i].position.y += particles[loop].vel / (2 * 1000);
         }
         particles[loop].vel += particles[loop].gravity;
+        if (particleType == HAIL && particles[loop].vel < -70)
+            particles[loop].vel = -70;
 
         if (vertices[(sceneSize + loop * particleSize)].position.y <= 0) {
-            init_particle(loop, particleSize, sceneSize);
-            if (particleType == SNOW)
-                impact(vertices[(sceneSize + loop * particleSize)].position.x, vertices[(sceneSize + loop * particleSize)].position.z);
+            if (particleType == HAIL && particles[loop].bounce) {
+                particles[loop].vel = -particles[loop].vel - 10;
+                particles[loop].gravity = -2;
+                particles[loop].bounce = false;
+            } else {
+                init_particle(loop, particleSize, sceneSize);
+                if (particleType == SNOW)
+                    impact(vertices[(sceneSize + loop * particleSize)].position.x, vertices[(sceneSize + loop * particleSize)].position.z);
+            }
         }
+        /*if (particles[loop].vel > 0 && vertices[(sceneSize + loop * particleSize)].position.y > 0.5) {
+            particles[loop].gravity = -0.1;
+            particles[loop].vel = -particles[loop].vel;
+        }*/
     }
 }

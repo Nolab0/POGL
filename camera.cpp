@@ -114,6 +114,9 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
     if (key == GLFW_KEY_S && action == GLFW_PRESS) {
         set_sun();
     }
+    if (key == GLFW_KEY_G && action == GLFW_PRESS) {
+        set_hail();
+    }
 }
 
 glm::mat4 look_at(GLint viewUniform){

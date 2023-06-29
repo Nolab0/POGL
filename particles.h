@@ -10,6 +10,7 @@ class particle {
 public:
     float vel;
     float gravity;
+    bool bounce;
 };
 
 void init_particles(const std::vector<Vertex>& particle, unsigned long offset);
