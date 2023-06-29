@@ -14,7 +14,7 @@ int main() {
                                         {"74.03", "111.53"}, // Nordvik
                                         {"36.82", "10.17"}}; // Tunis
 
-    WeatherInfo apiResponse = getWeatherData(cityPositions[7][0], cityPositions[7][1]);
+    WeatherInfo apiResponse = getWeatherData(cityPositions[5][0], cityPositions[5][1]);
 
     GLFWwindow* window = init_glfw();
 

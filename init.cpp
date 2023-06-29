@@ -114,6 +114,7 @@ std::vector<Vertex> loadOBJ(const std::string& filePath, const std::vector<Mater
 
                 Vertex vertex;
                 vertex.position = positions[std::stoi(vertexData[0]) - 1];
+                vertex.originalPosition = {vertex.position.x, vertex.position.y, vertex.position.z};
                 vertex.uv = uvs[std::stoi(vertexData[1]) - 1];
                 vertex.normal = normals[std::stoi(vertexData[2]) - 1];
 
@@ -208,27 +209,27 @@ std::vector<Material> circle3Mat = loadMTL("../objects/circle3.mtl");
 std::vector<Vertex> circle3 = loadOBJ("../objects/circle3.obj", circle3Mat);
 
 long displaySplash(float x, float z, int iter, long circleBegin){
-    std::vector<Vertex> cicleCpy;
+    std::vector<Vertex> circleCpy;
     switch (iter) {
         case 1:
-            deep_copy(cicleCpy, circle1);
+            deep_copy(circleCpy, circle1);
             break;
-        case 25:
+        case 10:
             vertices.erase(vertices.begin() + circleBegin, vertices.begin() + circleBegin + circle1.size());
-            deep_copy(cicleCpy, circle2);
+            deep_copy(circleCpy, circle2);
             break;
-        case 50:
+        case 20:
             vertices.erase(vertices.begin() + circleBegin, vertices.begin() + circleBegin + circle2.size());
-            deep_copy(cicleCpy, circle3);
+            deep_copy(circleCpy, circle3);
             break;
     }
-    for(int i = 0; i < cicleCpy.size(); i++){
-        cicleCpy[i].position.x += x;
-        cicleCpy[i].position.z += z;
-        cicleCpy[i].position.y += 0.2;
+    for(int i = 0; i < circleCpy.size(); i++){
+        circleCpy[i].position.x += x;
+        circleCpy[i].position.z += z;
+        circleCpy[i].position.y += 0.2;
     }
     long begin = vertices.size();
-    vertices.insert(vertices.end(), cicleCpy.begin(), cicleCpy.end());
+    vertices.insert(vertices.end(), circleCpy.begin(), circleCpy.end());
     return begin;
 }
 

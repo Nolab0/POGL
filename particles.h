@@ -4,7 +4,7 @@
 
 #include "init.h"
 
-#define MAX_PARTICLES 10000
+#define MAX_PARTICLES 100
 
 class particle {
 public:
