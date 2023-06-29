@@ -61,10 +61,8 @@ std::vector<Material> loadMTL(const std::string& filePath) {
         } else if (type == "Ks") {
             iss >> currentMaterial.specular.x >> currentMaterial.specular.y >> currentMaterial.specular.z;
         }
-        // Parse other material properties if needed
     }
 
-    // Add the last material to the list
     if (!currentMaterial.name.empty()) {
         materials.push_back(currentMaterial);
     }

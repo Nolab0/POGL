@@ -14,7 +14,6 @@ void moveObjectToPosition(std::vector<Vertex>::iterator begin, std::vector<Verte
 
 void init_particle(int i, unsigned long particleSize, unsigned long offset) {
     moveObjectToPosition(vertices.begin() + offset + i * particleSize, vertices.begin() + offset + (i+1) * particleSize, glm::vec3((float) (rand() % 21) - 10 + (float)(rand() % 100) / 100.0, 1 + (float)(rand() % 20) + ((float)(rand() % 100) / 100.0f), (float) (rand() % 21) - 10  + (float)(rand() % 100) / 100.0));
-    //moveObjectToPosition(vertices.begin() + offset + i * particleSize, vertices.begin() + offset + (i+1) * particleSize, glm::vec3(-9 + (float) (rand() % 2), 1 + (float)(rand() % 20) + ((float)(rand() % 100) / 100.0f), -7 + (float) (rand() % 2)));
     switch (particleType) {
         case RAIN:
             particles[i].vel = -50;
@@ -52,6 +51,12 @@ void updateParticles() {
             }
         }
         for (int i = 0; i < particleSize; i++) {
+            if (particleType == SNOW){
+                float decimal = vertices[(sceneSize + loop * particleSize) + i].position.y - std::floor(vertices[(sceneSize + loop * particleSize) + i].position.y);
+                float value = decimal * 2 * M_PI;
+                vertices[(sceneSize + loop * particleSize) + i].position.x += sin(value) / 500;
+                vertices[(sceneSize + loop * particleSize) + i].position.z += cos(value) / 500;
+            }
             vertices[(sceneSize + loop * particleSize) + i].position.y += particles[loop].vel / (2 * 1000);
         }
         particles[loop].vel += particles[loop].gravity;

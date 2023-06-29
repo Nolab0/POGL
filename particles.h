@@ -4,7 +4,7 @@
 
 #include "init.h"
 
-#define MAX_PARTICLES 10000
+#define MAX_PARTICLES 1000
 #define MAX_SPLASH 1000
 
 class particle {

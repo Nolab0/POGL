@@ -12,4 +12,6 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 glm::mat4 look_at(GLint viewUniform);
 
+extern glm::vec3 cameraPosition;
+
 #endif //WEATHER_VISUALIZER_CAMERA_H
