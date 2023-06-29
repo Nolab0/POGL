@@ -1,5 +1,6 @@
 #include "init.h"
 #include "particles.h"
+#include <algorithm>
 
 GLuint program_id;
 std::vector<Vertex> vertices;
@@ -208,33 +209,55 @@ std::vector<Vertex> circle2 = loadOBJ("../objects/circle2.obj", circle2Mat);
 std::vector<Material> circle3Mat = loadMTL("../objects/circle3.mtl");
 std::vector<Vertex> circle3 = loadOBJ("../objects/circle3.obj", circle3Mat);
 
-long displaySplash(float x, float z, int iter, long circleBegin){
-    std::vector<Vertex> circleCpy;
+bool anim[MAX_SPLASH] = {0};
+
+void displaySplash(float x, float z, int iter, int &splashIndex){
+    int index;
+    if (iter == 1){
+        auto result = std::find(std::begin(anim), std::end(anim), false);
+        if (result == std::end(anim)) {
+            std::cout << "No 'false' found in the array." << std::endl;
+        }
+        index = std::distance(std::begin(anim), result);
+        anim[index] = true;
+        splashIndex = index;
+    }
+    else
+        index = splashIndex;
+
+    long offset = sceneSize + particleSize * MAX_PARTICLES + index * (circle1.size() + circle2.size() + circle3.size());
     switch (iter) {
         case 1:
-            deep_copy(circleCpy, circle1);
+            for(int i = 0; i < circle1.size(); i++){
+                vertices[offset + i].position.x = vertices[offset + i].originalPosition.x + x;
+                vertices[offset + i].position.z = vertices[offset + i].originalPosition.z + z;
+                vertices[offset + i].position.y = vertices[offset + i].originalPosition.y + 0.2;
+            }
+            break;
+        case 5:
+            for(int i = 0; i < circle2.size(); i++){
+                vertices[offset + i].position.y = 50;
+                vertices[offset + circle1.size() + i].position.x = vertices[offset + circle1.size() + i].originalPosition.x + x;
+                vertices[offset + circle1.size() + i].position.z = vertices[offset + circle1.size() + i].originalPosition.z + z;
+                vertices[offset + circle1.size() + i].position.y = vertices[offset + circle1.size() + i].originalPosition.y + 0.2;
+            }
             break;
         case 10:
-            vertices.erase(vertices.begin() + circleBegin, vertices.begin() + circleBegin + circle1.size());
-            deep_copy(circleCpy, circle2);
-            break;
-        case 20:
-            vertices.erase(vertices.begin() + circleBegin, vertices.begin() + circleBegin + circle2.size());
-            deep_copy(circleCpy, circle3);
+            for(int i = 0; i < circle3.size(); i++){
+                vertices[offset + circle1.size() + i].position.y = 50;
+                vertices[offset + circle1.size() + circle2.size() + i].position.x = vertices[offset + circle1.size() + circle2.size() + i].originalPosition.x + x;
+                vertices[offset + circle1.size() + circle2.size() + i].position.z = vertices[offset + circle1.size() + circle2.size() + i].originalPosition.z + z;
+                vertices[offset + circle1.size() + circle2.size() + i].position.y = vertices[offset + circle1.size() + circle2.size() + i].originalPosition.y + 0.2;
+            }
             break;
     }
-    for(int i = 0; i < circleCpy.size(); i++){
-        circleCpy[i].position.x += x;
-        circleCpy[i].position.z += z;
-        circleCpy[i].position.y += 0.2;
-    }
-    long begin = vertices.size();
-    vertices.insert(vertices.end(), circleCpy.begin(), circleCpy.end());
-    return begin;
 }
 
-void deleteCircle(long circleBegin){
-    vertices.erase(vertices.begin() + circleBegin, vertices.begin() + circleBegin + circle3.size());
+void deleteCircle3(int splashIndex){
+    anim[splashIndex] = false;
+    for(int i = 0; i < circle3.size(); i++){
+        vertices[sceneSize + particleSize * MAX_PARTICLES + splashIndex * (circle1.size() + circle2.size() + circle3.size()) + circle1.size() + circle2.size() + i].position.y = 50;
+    }
 }
 
 void set_snow(){
@@ -272,6 +295,15 @@ void set_rain(){
     particleSize = waterDrop.size();
 
     init_particles(waterDrop, sceneSize);
+
+    std::vector<Vertex> animation;
+    animation.insert(animation.end(), circle1.begin(), circle1.end());
+    animation.insert(animation.end(), circle2.begin(), circle2.end());
+    animation.insert(animation.end(), circle3.begin(), circle3.end());
+
+    for (int i = 0; i < MAX_SPLASH; i++) {
+        vertices.insert(vertices.end(), animation.begin(), animation.end());
+    }
 }
 
 void set_sun(){

@@ -4,7 +4,8 @@
 
 #include "init.h"
 
-#define MAX_PARTICLES 100
+#define MAX_PARTICLES 10000
+#define MAX_SPLASH 1000
 
 class particle {
 public:
@@ -12,7 +13,7 @@ public:
     float gravity;
     bool bounce;
     int splashIter;
-    long circleBegin;
+    int splashIndex;
 };
 
 void init_particles(const std::vector<Vertex>& particle, unsigned long offset);

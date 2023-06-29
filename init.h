@@ -60,7 +60,7 @@ void set_rain();
 void set_sun();
 void set_hail();
 void impactSnow(float x, float z);
-long displaySplash(float x, float z, int iter, long circleBegin);
-void deleteCircle(long circleBegin);
+void displaySplash(float x, float z, int iter, int &splashIndex);
+void deleteCircle3(int splashIndex);
 
 #endif //WEATHER_VISUALIZER_INIT_H
