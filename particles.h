@@ -11,6 +11,8 @@ public:
     float vel;
     float gravity;
     bool bounce;
+    int splashIter;
+    std::vector<Vertex>::iterator circleBegin;
 };
 
 void init_particles(const std::vector<Vertex>& particle, unsigned long offset);

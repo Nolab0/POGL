@@ -1,6 +1,3 @@
-#ifndef WEATHER_VISUALIZER_INIT_H
-#define WEATHER_VISUALIZER_INIT_H
-
 #include <vector>
 #include <string>
 #include <glm/glm.hpp>
@@ -12,6 +9,9 @@
 #include <GL/freeglut.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#ifndef WEATHER_VISUALIZER_INIT_H
+#define WEATHER_VISUALIZER_INIT_H
 
 struct Material {
     std::string name;
@@ -58,6 +58,8 @@ void set_snow();
 void set_rain();
 void set_sun();
 void set_hail();
-void impact(float x, float z);
+void impactSnow(float x, float z);
+void displaySplash(float x, float z, int iter, std::vector<Vertex>::iterator &circleBegin);
+void deleteCircle(std::vector<Vertex>::iterator &circleBegin);
 
 #endif //WEATHER_VISUALIZER_INIT_H

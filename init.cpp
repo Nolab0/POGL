@@ -188,7 +188,7 @@ void deep_copy(std::vector<Vertex> &dest, std::vector<Vertex> &src){
     dest.insert(dest.end(), src.begin(), src.end());
 }
 
-void impact(float x, float z){
+void impactSnow(float x, float z){
     std::vector<Vertex> cubeCpy;
     deep_copy(cubeCpy, cube);
     for(int i = 0; i < cubeCpy.size(); i++){
@@ -197,6 +197,41 @@ void impact(float x, float z){
         cubeCpy[i].position.y += 0.2;
     }
     vertices.insert(vertices.end(), cubeCpy.begin(), cubeCpy.end());
+}
+
+
+std::vector<Material> circle1Mat = loadMTL("../objects/circle1.mtl");
+std::vector<Vertex> circle1 = loadOBJ("../objects/circle1.obj", circle1Mat);
+std::vector<Material> circle2Mat = loadMTL("../objects/circle2.mtl");
+std::vector<Vertex> circle2 = loadOBJ("../objects/circle2.obj", circle2Mat);
+std::vector<Material> circle3Mat = loadMTL("../objects/circle3.mtl");
+std::vector<Vertex> circle3 = loadOBJ("../objects/circle3.obj", circle3Mat);
+
+void displaySplash(float x, float z, int iter, std::vector<Vertex>::iterator &circleBegin){
+    std::vector<Vertex> cicleCpy;
+    switch (iter) {
+        case 1:
+            deep_copy(cicleCpy, circle1);
+            break;
+        case 2:
+            vertices.erase(circleBegin, circleBegin + circle1.size());
+            deep_copy(cicleCpy, circle2);
+            break;
+        case 3:
+            vertices.erase(circleBegin, circleBegin + circle2.size());
+            deep_copy(cicleCpy, circle3);
+            break;
+    }
+    for(int i = 0; i < cicleCpy.size(); i++){
+        cicleCpy[i].position.x += x;
+        cicleCpy[i].position.z += z;
+        cicleCpy[i].position.y += 0.2;
+    }
+    circleBegin = vertices.insert(vertices.end(), cicleCpy.begin(), cicleCpy.end());
+}
+
+void deleteCircle(std::vector<Vertex>::iterator &circleBegin){
+    vertices.erase(circleBegin, circleBegin + circle3.size());
 }
 
 void set_snow(){

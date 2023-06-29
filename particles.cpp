@@ -18,6 +18,7 @@ void init_particle(int i, unsigned long particleSize, unsigned long offset) {
         case RAIN:
             particles[i].vel = -50;
             particles[i].gravity = -0.8;
+            particles[i].splashIter = 0;
             break;
         case SNOW:
             particles[i].vel = -10;
@@ -40,6 +41,16 @@ void init_particles(const std::vector<Vertex>& particle, unsigned long offset) {
 
 void updateParticles() {
     for (loop = 0; loop < MAX_PARTICLES; loop++) {
+        if (particleType == RAIN && particles[loop].splashIter > 0) {
+            if (particles[loop].splashIter == 1 || particles[loop].splashIter == 5 || particles[loop].splashIter == 10)
+                displaySplash(vertices[(sceneSize + loop * particleSize)].position.x, vertices[(sceneSize + loop * particleSize)].position.z, particles[loop].splashIter, particles[loop].circleBegin);
+            particles[loop].splashIter++;
+            if (particles[loop].splashIter > 15){
+                particles[loop].splashIter = 0;
+                deleteCircle(particles[loop].circleBegin);
+            }
+            continue;
+        }
         for (int i = 0; i < particleSize; i++) {
             vertices[(sceneSize + loop * particleSize) + i].position.y += particles[loop].vel / (2 * 1000);
         }
@@ -55,12 +66,11 @@ void updateParticles() {
             } else {
                 init_particle(loop, particleSize, sceneSize);
                 if (particleType == SNOW)
-                    impact(vertices[(sceneSize + loop * particleSize)].position.x, vertices[(sceneSize + loop * particleSize)].position.z);
+                    impactSnow(vertices[(sceneSize + loop * particleSize)].position.x, vertices[(sceneSize + loop * particleSize)].position.z);
+                if (particleType == RAIN){
+                    particles[loop].splashIter = 1;
+                }
             }
         }
-        /*if (particles[loop].vel > 0 && vertices[(sceneSize + loop * particleSize)].position.y > 0.5) {
-            particles[loop].gravity = -0.1;
-            particles[loop].vel = -particles[loop].vel;
-        }*/
     }
 }
