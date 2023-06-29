@@ -207,18 +207,18 @@ std::vector<Vertex> circle2 = loadOBJ("../objects/circle2.obj", circle2Mat);
 std::vector<Material> circle3Mat = loadMTL("../objects/circle3.mtl");
 std::vector<Vertex> circle3 = loadOBJ("../objects/circle3.obj", circle3Mat);
 
-void displaySplash(float x, float z, int iter, std::vector<Vertex>::iterator &circleBegin){
+long displaySplash(float x, float z, int iter, long circleBegin){
     std::vector<Vertex> cicleCpy;
     switch (iter) {
         case 1:
             deep_copy(cicleCpy, circle1);
             break;
-        case 2:
-            vertices.erase(circleBegin, circleBegin + circle1.size());
+        case 25:
+            vertices.erase(vertices.begin() + circleBegin, vertices.begin() + circleBegin + circle1.size());
             deep_copy(cicleCpy, circle2);
             break;
-        case 3:
-            vertices.erase(circleBegin, circleBegin + circle2.size());
+        case 50:
+            vertices.erase(vertices.begin() + circleBegin, vertices.begin() + circleBegin + circle2.size());
             deep_copy(cicleCpy, circle3);
             break;
     }
@@ -227,11 +227,13 @@ void displaySplash(float x, float z, int iter, std::vector<Vertex>::iterator &ci
         cicleCpy[i].position.z += z;
         cicleCpy[i].position.y += 0.2;
     }
-    circleBegin = vertices.insert(vertices.end(), cicleCpy.begin(), cicleCpy.end());
+    long begin = vertices.size();
+    vertices.insert(vertices.end(), cicleCpy.begin(), cicleCpy.end());
+    return begin;
 }
 
-void deleteCircle(std::vector<Vertex>::iterator &circleBegin){
-    vertices.erase(circleBegin, circleBegin + circle3.size());
+void deleteCircle(long circleBegin){
+    vertices.erase(vertices.begin() + circleBegin, vertices.begin() + circleBegin + circle3.size());
 }
 
 void set_snow(){

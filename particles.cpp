@@ -42,10 +42,10 @@ void init_particles(const std::vector<Vertex>& particle, unsigned long offset) {
 void updateParticles() {
     for (loop = 0; loop < MAX_PARTICLES; loop++) {
         if (particleType == RAIN && particles[loop].splashIter > 0) {
-            if (particles[loop].splashIter == 1 || particles[loop].splashIter == 5 || particles[loop].splashIter == 10)
-                displaySplash(vertices[(sceneSize + loop * particleSize)].position.x, vertices[(sceneSize + loop * particleSize)].position.z, particles[loop].splashIter, particles[loop].circleBegin);
+            if (particles[loop].splashIter == 1 || particles[loop].splashIter == 25 || particles[loop].splashIter == 50)
+                particles[loop].circleBegin = displaySplash(vertices[(sceneSize + loop * particleSize)].position.x, vertices[(sceneSize + loop * particleSize)].position.z, particles[loop].splashIter, particles[loop].circleBegin);
             particles[loop].splashIter++;
-            if (particles[loop].splashIter > 15){
+            if (particles[loop].splashIter > 50){
                 particles[loop].splashIter = 0;
                 deleteCircle(particles[loop].circleBegin);
             }

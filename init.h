@@ -59,7 +59,7 @@ void set_rain();
 void set_sun();
 void set_hail();
 void impactSnow(float x, float z);
-void displaySplash(float x, float z, int iter, std::vector<Vertex>::iterator &circleBegin);
-void deleteCircle(std::vector<Vertex>::iterator &circleBegin);
+long displaySplash(float x, float z, int iter, long circleBegin);
+void deleteCircle(long circleBegin);
 
 #endif //WEATHER_VISUALIZER_INIT_H
