@@ -4,16 +4,17 @@
 #include "weather.h"
 
 int main() {
-    std::string cityPositions[8][2]  = {{"50.63", "3.06"}, // Lille
+    std::string cityPositions[9][2]  = {{"50.63", "3.06"}, // Lille
                                        {"48.85", "2.35"}, // Paris
                                        {"45.75", "4.85"}, // Lyon
                                        {"43.61", "3.87"}, // Marseille
                                        {"48.58", "7.75"}, // Strasbourg
                                        { "47.22", "-1.55" },// Nantes
                                         {"46.19", "6.77"}, // Avoriaz
-                                        {"74.03", "111.53"}}; // Nordvik
+                                        {"74.03", "111.53"}, // Nordvik
+                                        {"36.82", "10.17"}}; // Tunis
 
-    WeatherInfo apiResponse = getWeatherData(cityPositions[1][0], cityPositions[1][1]);
+    WeatherInfo apiResponse = getWeatherData(cityPositions[7][0], cityPositions[7][1]);
 
     GLFWwindow* window = init_glfw();
 

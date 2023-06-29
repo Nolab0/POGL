@@ -47,6 +47,8 @@ extern unsigned long sceneSize;
 extern unsigned long particleSize;
 extern float temperature;
 
+void updateTemp();
+void updateFog();
 std::string load(const std::string &filename);
 GLFWwindow* init_glfw();
 void init_glew();

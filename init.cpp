@@ -9,6 +9,16 @@ ParticleType particleType = RAIN;
 unsigned long particleSize;
 float temperature = 0.0f;
 
+void updateFog(){
+    GLint fogStartDistanceUniform = glGetUniformLocation(program_id, "fogStart");
+    glUniform1f(fogStartDistanceUniform, fogStartDistance);
+}
+
+void updateTemp(){
+    GLint temperatureUniform = glGetUniformLocation(program_id, "temperature");
+    glUniform1f(temperatureUniform, temperature);
+}
+
 std::string load(const std::string &filename) {
     std::ifstream input_src_file(filename, std::ios::in);
     std::string ligne;

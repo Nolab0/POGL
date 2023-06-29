@@ -84,6 +84,10 @@ void setWeatherDisplay(WeatherInfo weatherInfo) {
     else {
         set_sun();
     }
-
     fogStartDistance = ((float)weatherInfo.visibility / 24000.0f) * 25;
+    if (fogStartDistance < 5.0) {
+        fogStartDistance = 5.0;
+    }
+    updateTemp();
+    updateFog();
 }
