@@ -39,8 +39,9 @@ std::string getWeatherData() {
         else
         {
             json data = json::parse(apiResponse);
-            std::cout << data << std::endl;
-            std::cout << data.value("hourly", "not found") << std::endl;
+            json hourly = data["hourly"];
+            json rain = hourly["rain"];
+            std::cout << rain << std::endl;
         }
 
         // Clean up
