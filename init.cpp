@@ -337,18 +337,14 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     glLinkProgram(program_id);
     glUseProgram(program_id);
 
-    // Create vertex array object (VAO)
     GLuint vertexArrayID;
     glGenVertexArrays(1, &vertexArrayID);
     glBindVertexArray(vertexArrayID);
-
-    // Create vertex buffer object (VBO)
 
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
-    // Specify vertex attributes
     GLint positionAttrib = glGetAttribLocation(program_id, "position");
     glEnableVertexAttribArray(positionAttrib);
     glVertexAttribPointer(positionAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, position)));
@@ -371,12 +367,10 @@ View init_obj_and_shaders(std::vector<Vertex> &vertices,  GLuint &vertexBuffer){
     GLint temperatureUniform = glGetUniformLocation(program_id, "temperature");
     glUniform1f(temperatureUniform, temperature);
 
-    // Projection matrix
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
     GLint projectionUniform = glGetUniformLocation(program_id, "projection");
     glUniformMatrix4fv(projectionUniform, 1, GL_FALSE, glm::value_ptr(projection));
 
-    // Model and view matrices
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     GLint modelUniform = glGetUniformLocation(program_id, "model");

@@ -26,7 +26,6 @@ WeatherInfo getWeatherData(std::string latitude, std::string longitude) {
 
     if (curl)
     {
-        // Get the meteo info from Paris
         curl_easy_setopt(curl, CURLOPT_URL, apiCall.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &apiResponse);
@@ -64,7 +63,6 @@ WeatherInfo getWeatherData(std::string latitude, std::string longitude) {
             }
         }
 
-        // Clean up
         curl_easy_cleanup(curl);
     }
 

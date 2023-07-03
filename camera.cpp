@@ -23,7 +23,6 @@ void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
     }
 }
 
-// Mouse movement callback function
 void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
     if (firstMouse) {
         lastX = xpos;
@@ -44,7 +43,6 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
         yaw += xOffset;
         pitch += yOffset;
 
-        // Clamp pitch to avoid flipping the camera
         if (pitch > 89.0f)
             pitch = 89.0f;
         if (pitch < -89.0f)
@@ -63,7 +61,6 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
 
-    // Move camera based on arrow key input
     float cameraSpeedMultiplier = 5.0f;
     if (key == GLFW_KEY_UP) {
         cameraPosition += cameraSpeed * cameraSpeedMultiplier * cameraFront;

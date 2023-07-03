@@ -4,8 +4,8 @@
 
 #include "init.h"
 
-#define MAX_PARTICLES 1000
-#define MAX_SPLASH 1000
+#define MAX_PARTICLES 3000
+#define MAX_SPLASH 3000
 
 class particle {
 public:
